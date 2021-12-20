@@ -1,4 +1,4 @@
-# Multi-peripheral Example
+# BLE ADC Multiple Peripheral Code
 
 ---
 
