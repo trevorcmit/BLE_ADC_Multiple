@@ -1,14 +1,7 @@
 /**
  ****************************************************************************************
- *
  * @file user_multi_peripheral.c
- *
  * @brief Empty peripheral template project source code.
- *
- * Copyright (C) 2012-2019 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information
- * of Dialog Semiconductor. All Rights Reserved.
- *
  ****************************************************************************************
  */
 
@@ -25,7 +18,6 @@
  * INCLUDE FILES
  ****************************************************************************************
  */
-
 #include "app_api.h"
 #include "user_multi_peripheral.h"
 #include "user_callback_config.h"
@@ -254,10 +246,27 @@ void user_app_adv_start(void)
  * @return If the message was consumed or not.
  ****************************************************************************************
  */
-int gapc_connection_req_ind_handler(ke_msg_id_t const msgid,
-                                           struct gapc_connection_req_ind const *param,
-                                           ke_task_id_t const dest_id,  // dest_id -> TASK_APP
-                                           ke_task_id_t const src_id)   // src_id -> TASK_GAPC
+
+#ifdef CFG_ENABLE_MULTIPLE_CONN
+__WEAK int gapc_connection_req_ind_handler(ke_msg_id_t const msgid,
+                      struct gapc_connection_req_ind const *param,
+                      ke_task_id_t const dest_id,
+                      ke_task_id_t const src_id)
+
+
+
+#else
+static int gapc_connection_req_ind_handler(ke_msg_id_t const msgid,
+                      struct gapc_connection_req_ind const *param,
+                      ke_task_id_t const dest_id,
+                      ke_task_id_t const src_id)
+#endif
+
+// int gapc_connection_req_ind_handler(ke_msg_id_t const msgid,
+//                                            struct gapc_connection_req_ind const *param,
+//                                            ke_task_id_t const dest_id,  // dest_id -> TASK_APP
+//                                            ke_task_id_t const src_id)   // src_id -> TASK_GAPC
+
 {
     uint8_t conidx = KE_IDX_GET(src_id);
     uint8_t current_state = ke_state_get(KE_BUILD_ID(KE_TYPE_GET(dest_id), conidx));
@@ -305,10 +314,26 @@ int gapc_connection_req_ind_handler(ke_msg_id_t const msgid,
  * @return If the message was consumed or not.
  ****************************************************************************************
  */
-int gapc_disconnect_ind_handler(ke_msg_id_t const msgid,
-                                       struct gapc_disconnect_ind const *param,
-                                       ke_task_id_t const dest_id,
-                                       ke_task_id_t const src_id)
+// int gapc_disconnect_ind_handler(ke_msg_id_t const msgid,
+//                                        struct gapc_disconnect_ind const *param,
+//                                        ke_task_id_t const dest_id,
+//                                        ke_task_id_t const src_id)
+
+#ifdef CFG_ENABLE_MULTIPLE_CONN
+__WEAK int gapc_disconnect_ind_handler(ke_msg_id_t const msgid,
+                      struct gapc_disconnect_ind const *param,
+                      ke_task_id_t const dest_id,
+                      ke_task_id_t const src_id)
+
+
+
+#else
+static int gapc_disconnect_ind_handler(ke_msg_id_t const msgid,
+                    struct gapc_disconnect_ind const *param,
+                    ke_task_id_t const dest_id,
+                    ke_task_id_t const src_id)
+#endif
+
 {
     uint8_t conidx = KE_IDX_GET(src_id);
     uint8_t state = ke_state_get(KE_BUILD_ID(KE_TYPE_GET(dest_id), conidx));

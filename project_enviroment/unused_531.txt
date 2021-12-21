@@ -1,4 +1,4 @@
-;#<FEEDBACK># ARM Linker, 5060750: Last Updated: Fri Mar 27 11:23:35 2020
+;#<FEEDBACK># ARM Linker, 5060960: Last Updated: Tue Dec 21 10:24:36 2021
 ;VERSION 0.2
 ;FILE adc_531.o
 adc_correct_sample <= USED 0
@@ -303,6 +303,8 @@ user_svc1_indicateable_ind_cfm_handler <= USED 0
 user_svc1_long_val_ntf_cfm_handler <= USED 0
 ;FILE user_multi_peripheral.o
 appconidx_to_sdkconidx <= USED 0
+gapc_connection_req_ind_handler <= USED 0
+gapc_disconnect_ind_handler <= USED 0
 ;FILE user_periph_setup.o
 ;FILE wkupct_quadec.o
 quad_decoder_clear_irq <= USED 0
