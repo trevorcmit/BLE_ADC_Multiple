@@ -1,35 +1,19 @@
 /**
- ****************************************************************************************
- *
- * @file user_periph_setup.h
- *
- * @brief Peripherals setup header file.
- *
- * Copyright (C) 2015-2019 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information
- * of Dialog Semiconductor. All Rights Reserved.
- *
- ****************************************************************************************
- */
-
+**************************************************************************************
+* @file user_periph_setup.h
+* @brief Peripherals setup header file.
+**************************************************************************************
+*/
 #ifndef _USER_PERIPH_SETUP_H_
 #define _USER_PERIPH_SETUP_H_
 
 /*
- * INCLUDE FILES
- ****************************************************************************************
- */
-
+* INCLUDE FILES
+****************************************************************************************
+*/
 #include "arch.h"
 #include "gpio.h"
 #include "uart.h"
-
-
-/*
- * DEFINES
- ****************************************************************************************
- */
-
 
 /****************************************************************************************/
 /* UART2 configuration to use with arch_console print messages                          */
@@ -78,9 +62,9 @@
 #endif
 
 /*
- * FUNCTION DECLARATIONS
- ****************************************************************************************
- */
+* FUNCTION DECLARATIONS
+****************************************************************************************
+*/
 
 #if DEVELOPMENT_DEBUG
 /**

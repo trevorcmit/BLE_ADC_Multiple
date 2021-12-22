@@ -1,41 +1,24 @@
 /**
- ****************************************************************************************
- *
- * @file user_profiles_config.h
- *
- * @brief Configuration file for the profiles used in the application.
- *
- * Copyright (C) 2015-2019 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information
- * of Dialog Semiconductor. All Rights Reserved.
- *
- ****************************************************************************************
- */
-
+****************************************************************************************
+* @file user_profiles_config.h
+* @brief Configuration file for the profiles used in the application.
+****************************************************************************************
+*/
 #ifndef _USER_PROFILES_CONFIG_H_
 #define _USER_PROFILES_CONFIG_H_
 
 /**
- ****************************************************************************************
- * @defgroup APP_CONFIG
- * @ingroup APP
- * @brief  Application configuration file
- *
- * This file contains the configuration of the profiles used by the application.
- *
- * @{
- ****************************************************************************************
- */
-
-/*
- * DEFINITIONS
- ****************************************************************************************
- */
+****************************************************************************************
+* @defgroup APP_CONFIG
+* @ingroup APP
+* @brief  Application configuration file
+* @{
+****************************************************************************************
+*/
 
 /***************************************************************************************/
 /* Used BLE profiles (used by "rwprf_config.h").                                       */
 /***************************************************************************************/
-
 #define CFG_PRF_DISS
 #define CFG_PRF_CUST1
 
@@ -44,11 +27,10 @@
 /***************************************************************************************/
 
 /*
- ****************************************************************************************
- * DISS application profile configuration
- ****************************************************************************************
- */
-
+****************************************************************************************
+* DISS application profile configuration
+****************************************************************************************
+*/
 #define APP_DIS_FEATURES                (DIS_MANUFACTURER_NAME_CHAR_SUP | \
                                         DIS_MODEL_NB_STR_CHAR_SUP | \
                                         DIS_SYSTEM_ID_CHAR_SUP | \

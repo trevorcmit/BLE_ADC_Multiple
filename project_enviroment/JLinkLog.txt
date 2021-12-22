@@ -1,0 +1,59 @@
+T0F4C 000:038.480   SEGGER J-Link V7.22b Log File
+T0F4C 000:047.560   DLL Compiled: Jun 17 2021 17:22:49
+T0F4C 000:047.571   Logging started @ 2021-12-22 21:05
+T0F4C 000:047.580 - 47.584ms
+T0F4C 000:048.383 JLINK_SetWarnOutHandler(...)
+T0F4C 000:048.813 - 0.437ms
+T0F4C 000:048.832 JLINK_OpenEx(...)
+T0F4C 000:054.976   Firmware: J-Link OB-SAM3U128 V1 compiled Feb  2 2021 16:46:37
+T0F4C 000:055.281   Firmware: J-Link OB-SAM3U128 V1 compiled Feb  2 2021 16:46:37
+T0F4C 000:057.476   Hardware: V1.00
+T0F4C 000:057.496   S/N: 480072092
+T0F4C 000:057.513   OEM: SEGGER
+T0F4C 000:057.524   Feature(s): None
+T0F4C 000:060.156   TELNET listener socket opened on port 19021
+T0F4C 000:061.420   WEBSRV Starting webserver
+T0F4C 000:061.561   WEBSRV Webserver running on local port 19080
+T0F4C 000:061.576 - 12.748ms returns "O.K."
+T0F4C 000:061.602 JLINK_GetEmuCaps()
+T0F4C 000:061.619 - 0.021ms returns 0xB9FE5BBF
+T0F4C 000:061.634 JLINK_TIF_GetAvailable(...)
+T0F4C 000:061.842 - 0.217ms
+T0F4C 000:061.862 JLINK_SetErrorOutHandler(...)
+T0F4C 000:061.870 - 0.011ms
+T0F4C 000:070.460 JLINK_ExecCommand("ProjectFile = "C:\Program Files (x86)\Dialog Semiconductor\SDK_6.0.14.1114\DA145xx_SDK\6.0.14.1114\projects\target_apps\ble_examples\multi_con_periph\project_enviroment\JLinkSettings.ini"", ...). 
+T0F4C 000:127.734 - 57.291ms returns 0x00
+T0F4C 000:129.788 JLINK_ExecCommand("Device = ARMCM0P", ...). 
+T0F4C 000:132.629   Device "CORTEX-M0" selected.
+T0F4C 000:133.000 - 3.198ms returns 0x00
+T0F4C 000:133.027 JLINK_GetHardwareVersion()
+T0F4C 000:133.035 - 0.011ms returns 10000
+T0F4C 000:133.044 JLINK_GetDLLVersion()
+T0F4C 000:133.051 - 0.010ms returns 72202
+T0F4C 000:133.060 JLINK_GetOEMString(...)
+T0F4C 000:133.069 JLINK_GetFirmwareString(...)
+T0F4C 000:133.082 - 0.016ms
+T0F4C 000:138.033 JLINK_GetDLLVersion()
+T0F4C 000:138.055 - 0.025ms returns 72202
+T0F4C 000:138.065 JLINK_GetCompileDateTime()
+T0F4C 000:138.072 - 0.010ms
+T0F4C 000:139.640 JLINK_GetFirmwareString(...)
+T0F4C 000:139.662 - 0.025ms
+T0F4C 000:141.179 JLINK_GetHardwareVersion()
+T0F4C 000:141.197 - 0.021ms returns 10000
+T0F4C 000:142.961 JLINK_GetSN()
+T0F4C 000:142.980 - 0.022ms returns 480072092
+T0F4C 000:144.439 JLINK_GetOEMString(...)
+T0F4C 000:145.902 JLINK_TIF_Select(JLINKARM_TIF_JTAG)
+T0F4C 000:147.512 - 1.621ms returns 0x00
+T0F4C 000:147.532 JLINK_HasError()
+T0F4C 000:147.937 JLINK_SetSpeed(2000)
+T0F4C 000:148.148 - 0.218ms
+T0F4C 000:148.170 JLINK_GetIdData(pIdData)
+T0F4C 000:151.241   Could not measure total IR len. TDO is constant high.
+T0F4C 000:311.086   Could not measure total IR len. TDO is constant high.
+T0F4C 000:311.761 - 163.613ms
+T0F4C 002:851.478 JLINK_Close()
+T0F4C 002:873.955 - 22.520ms
+T0F4C 002:874.005   
+T0F4C 002:874.013   Closed

@@ -4,7 +4,6 @@
  * @brief Empty peripheral template project source code.
  ****************************************************************************************
  */
-
 /**
  ****************************************************************************************
  * @addtogroup APP
@@ -12,7 +11,6 @@
  ****************************************************************************************
  */
 #include "rwip_config.h"             // SW configuration
-
 
 /*
  * INCLUDE FILES
@@ -28,11 +26,6 @@
 #include "arch_console.h"
 
 /*
- * FUNCTION DEFINITIONS
- ****************************************************************************************
-*/
-
-/*
  * GLOBAL VARIABLE DEFINITIONS
  ****************************************************************************************
  */
@@ -41,8 +34,7 @@ struct app_env_tag user_app_env[APP_EASY_MAX_ACTIVE_CONNECTION]     __SECTION_ZE
 extern uint16_t non_db_val_read[CFG_MAX_CONNECTIONS];
 extern uint16_t non_db_val_write[CFG_MAX_CONNECTIONS];
 
-static uint8_t print_out_connected_dev(void)
-{
+static uint8_t print_out_connected_dev(void) {
     uint8_t connected_dev = 0;
     arch_printf("Connected Devices: \n\r");
     for (uint8_t i=0; i < APP_IDX_MAX; i++)
@@ -69,8 +61,7 @@ static uint8_t print_out_connected_dev(void)
     return connected_dev;
 }
 
-void printout_db_status(void)
-{
+void printout_db_status(void) {
     arch_printf("bd_address         Read_Char         Write_Char \n\r");
     for (uint8_t i=0; i < APP_IDX_MAX; i++)
     {
@@ -92,8 +83,7 @@ void printout_db_status(void)
     }
 }
 
-uint8_t sdkconidx_to_appconidx(uint8_t sdk_conidx)
-{
+uint8_t sdkconidx_to_appconidx(uint8_t sdk_conidx) {
     for(uint8_t app_conidx = 0; app_conidx < APP_IDX_MAX; app_conidx++)
     {
         if (!memcmp(app_env[sdk_conidx].peer_addr.addr, user_app_env[app_conidx].peer_addr.addr, sizeof(struct bd_addr)))
@@ -102,8 +92,7 @@ uint8_t sdkconidx_to_appconidx(uint8_t sdk_conidx)
     return 0;
 }
 
-uint8_t appconidx_to_sdkconidx(uint8_t app_conidx)
-{
+uint8_t appconidx_to_sdkconidx(uint8_t app_conidx) {
     for(uint8_t sdk_conidx = 0; sdk_conidx < APP_IDX_MAX; sdk_conidx++)
     {
         if (!memcmp(user_app_env[sdk_conidx].peer_addr.addr, app_env[app_conidx].peer_addr.addr, sizeof(struct bd_addr)))
@@ -112,8 +101,7 @@ uint8_t appconidx_to_sdkconidx(uint8_t app_conidx)
     return 0;
 }
 
-uint8_t add_to_user_peer_log(uint8_t connection_idx)
-{
+uint8_t add_to_user_peer_log(uint8_t connection_idx) {
     /* Check if the connected device exists in the application registered devices if yes return app_conidx  */
     for(uint8_t idx = 0; idx < APP_IDX_MAX; idx++)
         if (!memcmp(app_env[connection_idx].peer_addr.addr, user_app_env[idx].peer_addr.addr, sizeof(struct bd_addr)))
@@ -124,10 +112,8 @@ uint8_t add_to_user_peer_log(uint8_t connection_idx)
             return idx;
         }
     /* If the bd address is not one of the stored devices and there is room for the device register the new device */
-    for(uint8_t idx = 0; idx < APP_IDX_MAX; idx++)
-    {
-        if(user_app_env[idx].conidx == GAP_INVALID_CONIDX)
-        {
+    for (uint8_t idx = 0; idx < APP_IDX_MAX; idx++) {
+        if(user_app_env[idx].conidx == GAP_INVALID_CONIDX) {
             memcpy(&user_app_env[idx], &app_env[connection_idx], sizeof(struct app_env_tag));
             return idx;
         }
@@ -135,15 +121,13 @@ uint8_t add_to_user_peer_log(uint8_t connection_idx)
     return 0xFF; // No room for an extra connection
 }
 
-void user_on_connection(uint8_t connection_idx, struct gapc_connection_req_ind const *param)
-{
+void user_on_connection(uint8_t connection_idx, struct gapc_connection_req_ind const *param) {
     add_to_user_peer_log(connection_idx);
     user_app_adv_start();
     default_app_on_connection(connection_idx, param);
 }
 
-void user_on_disconnect( struct gapc_disconnect_ind const *param)
-{
+void user_on_disconnect( struct gapc_disconnect_ind const *param) {
     user_app_env[sdkconidx_to_appconidx(param->conhdl)].connection_active = false;
     user_app_env[sdkconidx_to_appconidx(param->conhdl)].conidx = GAP_INVALID_CONIDX;
     
@@ -160,23 +144,14 @@ void user_on_disconnect( struct gapc_disconnect_ind const *param)
 static void custom_append_device_name(uint8_t *len,
                                       const uint8_t name_length,
                                       uint8_t *data,
-                                      const void *name_data)
-{
-    // Fill Length
-    data[0] = name_length + 1;
-
-    // Fill Device Name Flag
-    data[1] = GAP_AD_TYPE_COMPLETE_NAME;
-
-    // Copy device name
-    memcpy(&data[2], name_data, name_length);
-
-    // Update advertising or scan response data length
-    *len += name_length + 2;
+                                      const void *name_data) {
+    data[0] = name_length + 1;                 // Fill length
+    data[1] = GAP_AD_TYPE_COMPLETE_NAME;       // Fill Device Name Flag
+    memcpy(&data[2], name_data, name_length);  // Copy device name
+    *len += name_length + 2;                   // Update advertising or scan response data length
 }
 
-void user_app_adv_start(void)
-{
+void user_app_adv_start(void) {
     ke_task_id_t task_id;
     struct gapm_start_advertise_cmd* cmd;
     cmd = app_advertise_start_msg_create();
@@ -194,22 +169,19 @@ void user_app_adv_start(void)
     memcpy(&(cmd->info.host.scan_rsp_data[0]), USER_ADVERTISE_SCAN_RESPONSE_DATA, USER_ADVERTISE_SCAN_RESPONSE_DATA_LEN);
     
     // Place the Device Name in the Advertising Data or in the Scan Response Data
-    if (USER_DEVICE_NAME_LEN > 0)
-    {
+    if (USER_DEVICE_NAME_LEN > 0) {
         // Get remaining space in the Advertising Data ( plus 2 bytes are used for the length and flag bytes of the Device Name and 3 bytes for the AD type flags)
         uint16_t total_adv_space = 3 + cmd->info.host.adv_data_len + 2 + USER_DEVICE_NAME_LEN;
         // Get remaining space in the Scan Response Data ( plus 2 bytes are used for the length and flag bytes of the Device Name)
         uint16_t total_scan_space = cmd->info.host.scan_rsp_data_len + 2 + USER_DEVICE_NAME_LEN;
 
-        if (total_adv_space <= ADV_DATA_LEN)
-        {
+        if (total_adv_space <= ADV_DATA_LEN) {
             custom_append_device_name(&cmd->info.host.adv_data_len,
                                       USER_DEVICE_NAME_LEN,
                                       &(cmd->info.host.adv_data[cmd->info.host.adv_data_len]),
                                       USER_DEVICE_NAME);
         }
-        else if (total_scan_space <= SCAN_RSP_DATA_LEN)
-        {
+        else if (total_scan_space <= SCAN_RSP_DATA_LEN) {
             custom_append_device_name(&cmd->info.host.scan_rsp_data_len,
                                       USER_DEVICE_NAME_LEN,
                                       &(cmd->info.host.scan_rsp_data[cmd->info.host.scan_rsp_data_len]),
@@ -221,12 +193,10 @@ void user_app_adv_start(void)
     app_advertise_start_msg_send(cmd);
     
     // Set proper states only to those tasks which are currently disconnected
-    for(uint8_t idx = 0; idx < APP_IDX_MAX; idx++)
-    {
+    for(uint8_t idx = 0; idx < APP_IDX_MAX; idx++) {
         task_id = KE_BUILD_ID(TASK_APP, idx); 	
 		// Check if we are not already in a connected state	
-		if (ke_state_get(task_id) != APP_CONNECTED)
-        {
+		if (ke_state_get(task_id) != APP_CONNECTED) {
             ke_state_set(task_id, APP_CONNECTABLE);
         }
     }  
@@ -272,13 +242,11 @@ static int gapc_connection_req_ind_handler(ke_msg_id_t const msgid,
     uint8_t current_state = ke_state_get(KE_BUILD_ID(KE_TYPE_GET(dest_id), conidx));
     
     // Connection Index
-    if (current_state == APP_CONNECTABLE)
-    {
+    if (current_state == APP_CONNECTABLE) {
         ASSERT_WARNING(conidx < APP_EASY_MAX_ACTIVE_CONNECTION);
         app_env[conidx].conidx = conidx;
 
-        if (conidx != GAP_INVALID_CONIDX)
-        {
+        if (conidx != GAP_INVALID_CONIDX) {
             app_env[conidx].connection_active = true;
             ke_state_set(KE_BUILD_ID(KE_TYPE_GET(dest_id), conidx), APP_CONNECTED); //SUPBLE_6975
             // Retrieve the connection info from the parameters
@@ -294,12 +262,9 @@ static int gapc_connection_req_ind_handler(ke_msg_id_t const msgid,
         }
         CALLBACK_ARGS_2(user_app_callbacks.app_on_connection, conidx, param)
     }
-    else
-    {
-        // APP_CONNECTABLE state is used to wait the GAP_LE_CREATE_CONN_REQ_CMP_EVT message
+    else { // APP_CONNECTABLE state is used to wait the GAP_LE_CREATE_CONN_REQ_CMP_EVT message
         ASSERT_ERROR(0);
     }
-
     return (KE_MSG_CONSUMED);
 }
 

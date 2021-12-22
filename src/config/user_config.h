@@ -1,25 +1,17 @@
 /**
- ****************************************************************************************
- *
- * @file user_config.h
- *
- * @brief User configuration file.
- *
- * Copyright (C) 2015-2020 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information
- * of Dialog Semiconductor. All Rights Reserved.
- *
- ****************************************************************************************
- */
+****************************************************************************************
+* @file user_config.h
+* @brief User configuration file.
+****************************************************************************************
+*/
 
 #ifndef _USER_CONFIG_H_
 #define _USER_CONFIG_H_
 
 /*
- * INCLUDE FILES
- ****************************************************************************************
- */
-
+* INCLUDE FILES
+****************************************************************************************
+*/
 #include "app_user_config.h"
 #include "arch_api.h"
 #include "app_default_handlers.h"
@@ -27,17 +19,17 @@
 #include "co_bt.h"
 
 /*
- * LOCAL VARIABLES
- ****************************************************************************************
- */
+* LOCAL VARIABLES
+****************************************************************************************
+*/
 
 /*
- ****************************************************************************************
- *
- * Privacy / Addressing configuration
- *
- ****************************************************************************************
- */
+****************************************************************************************
+*
+* Privacy / Addressing configuration
+*
+****************************************************************************************
+*/
 
 /*************************************************************************
  * Privacy Capabilities and address configuration of local device:
@@ -98,13 +90,13 @@ static const struct advertise_configuration user_adv_conf = {
      * - ADV_CHNL_38_EN:   Advertising channel map for channel 38.
      * - ADV_CHNL_39_EN:   Advertising channel map for channel 39.
      * - ADV_ALL_CHNLS_EN: Advertising channel map for channel 37, 38 and 39.
-     */
+    */
     .channel_map = ADV_ALL_CHNLS_EN,
 
     /*************************
      * Advertising information
      *************************
-     */
+    */
 
     /// Host information advertising data (GAPM_ADV_NON_CONN and GAPM_ADV_UNDIRECT)
     /// Advertising mode :
