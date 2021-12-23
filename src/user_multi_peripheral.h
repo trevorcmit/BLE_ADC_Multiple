@@ -1,15 +1,8 @@
 /**
- ****************************************************************************************
- *
+ ***************************************************************************************
  * @file user_empty_peripheral_template.h
- *
  * @brief Empty peripheral template project header file.
- *
- * Copyright (C) 2012-2019 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information
- * of Dialog Semiconductor. All Rights Reserved.
- *
- ****************************************************************************************
+ ***************************************************************************************
  */
 
 #ifndef _USER_EMPTY_PERIPHERAL_TEMPLATE_H_
@@ -19,18 +12,10 @@
  ****************************************************************************************
  * @addtogroup APP
  * @ingroup RICOW
- *
  * @brief 
- *
  * @{
  ****************************************************************************************
  */
-
-/*
- * INCLUDE FILES
- ****************************************************************************************
- */
-
 #include "rwble_config.h"
 #include "app_task.h"                  // application task
 #include "gapc_task.h"                 // gap functions and messages
@@ -48,23 +33,12 @@ i.e.
 #endif
 *****************************************************************************/
 
-/*
- * TYPE DEFINITIONS
- ****************************************************************************************
- */
-
-/*
- * DEFINES
- ****************************************************************************************
- */
- 
 #define APP_PERIPHERAL_CTRL_TIMER_DELAY 100
 
 /*
  * FUNCTION DECLARATIONS
  ****************************************************************************************
  */
-
 /**
  ****************************************************************************************
  * @brief Connection function.
@@ -80,7 +54,7 @@ void user_on_connection(uint8_t connection_idx, struct gapc_connection_req_ind c
  * @param[in] param Pointer to GAPC_DISCONNECT_IND message
  ****************************************************************************************
 */
-void user_on_disconnect( struct gapc_disconnect_ind const *param);
+void user_on_disconnect(struct gapc_disconnect_ind const *param);
 
 /**
  ****************************************************************************************

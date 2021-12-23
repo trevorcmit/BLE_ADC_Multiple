@@ -1,17 +1,9 @@
 /**
- ****************************************************************************************
- *
- * @file user_custs1_impl.h
- *
- * @brief Peripheral project Custom1 Server implementation header file.
- *
- * Copyright (C) 2015-2019 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information
- * of Dialog Semiconductor. All Rights Reserved.
- *
- ****************************************************************************************
- */
-
+****************************************************************************************
+* @file user_custs1_impl.h
+* @brief Peripheral project Custom1 Server implementation header file.
+****************************************************************************************
+*/
 #ifndef _USER_CUSTS1_IMPL_H_
 #define _USER_CUSTS1_IMPL_H_
 

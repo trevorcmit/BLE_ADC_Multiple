@@ -97,7 +97,6 @@ static const struct advertise_configuration user_adv_conf = {
      * Advertising information
      *************************
     */
-
     /// Host information advertising data (GAPM_ADV_NON_CONN and GAPM_ADV_UNDIRECT)
     /// Advertising mode :
     /// - GAP_NON_DISCOVERABLE: Non discoverable mode
