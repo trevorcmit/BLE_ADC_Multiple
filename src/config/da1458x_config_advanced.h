@@ -4,7 +4,6 @@
  * @brief Advanced compile configuration file.
  ****************************************************************************************
 */
-
 #ifndef _DA1458X_CONFIG_ADVANCED_H_
 #define _DA1458X_CONFIG_ADVANCED_H_
 #include "da1458x_stack_config.h"
@@ -103,7 +102,6 @@
 /* - CFG_NVDS_TAG_BLE_CA_NB_BAD_PKT     Number  of bad packets needed to remove a channel                       */
 /****************************************************************************************************************/
 #define CFG_NVDS_TAG_BD_ADDRESS             {0x01, 0x00, 0x70, 0xCA, 0xEA, 0x80}
-
 #define CFG_NVDS_TAG_LPCLK_DRIFT            DRIFT_500PPM
 #define CFG_NVDS_TAG_BLE_CA_TIMER_DUR       2000
 #define CFG_NVDS_TAG_BLE_CRA_TIMER_DUR      6

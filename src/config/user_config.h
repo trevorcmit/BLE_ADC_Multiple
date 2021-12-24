@@ -4,24 +4,14 @@
 * @brief User configuration file.
 ****************************************************************************************
 */
-
 #ifndef _USER_CONFIG_H_
 #define _USER_CONFIG_H_
 
-/*
-* INCLUDE FILES
-****************************************************************************************
-*/
 #include "app_user_config.h"
 #include "arch_api.h"
 #include "app_default_handlers.h"
 #include "app_adv_data.h"
 #include "co_bt.h"
-
-/*
-* LOCAL VARIABLES
-****************************************************************************************
-*/
 
 /*
 ****************************************************************************************
@@ -214,7 +204,6 @@ static const struct gapm_configuration user_gapm_conf = {
      * ATT database configuration
      ****************************
      */
-
     /// Attribute database configuration (@see enum gapm_att_cfg_flag)
     ///    7     6    5     4     3    2    1    0
     /// +-----+-----+----+-----+-----+----+----+----+

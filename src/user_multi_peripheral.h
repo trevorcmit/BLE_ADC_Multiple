@@ -4,7 +4,6 @@
  * @brief Empty peripheral template project header file.
  ***************************************************************************************
  */
-
 #ifndef _USER_EMPTY_PERIPHERAL_TEMPLATE_H_
 #define _USER_EMPTY_PERIPHERAL_TEMPLATE_H_
 

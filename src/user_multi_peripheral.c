@@ -25,7 +25,6 @@
 ****************************************************************************************
 */
 struct app_env_tag user_app_env[APP_EASY_MAX_ACTIVE_CONNECTION]     __SECTION_ZERO("retention_mem_area0"); //@RETENTION MEMORY
-
 extern uint16_t non_db_val_read[CFG_MAX_CONNECTIONS];
 extern uint16_t non_db_val_write[CFG_MAX_CONNECTIONS];
 
@@ -279,8 +278,6 @@ __WEAK int gapc_disconnect_ind_handler(ke_msg_id_t const msgid,
                       struct gapc_disconnect_ind const *param,
                       ke_task_id_t const dest_id,
                       ke_task_id_t const src_id)
-
-
 
 #else
 static int gapc_disconnect_ind_handler(ke_msg_id_t const msgid,
