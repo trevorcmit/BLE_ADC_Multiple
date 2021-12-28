@@ -1,22 +1,9 @@
 /**
  ****************************************************************************************
- *
  * @file user_custs1_impl.c
- *
  * @brief Peripheral project Custom1 Server implementation source code.
- *
- * Copyright (C) 2015-2019 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information
- * of Dialog Semiconductor. All Rights Reserved.
- *
  ****************************************************************************************
  */
-
-/*
- * INCLUDE FILES
- ****************************************************************************************
- */
-
 #include "gpio.h"
 #include "app_api.h"
 #include "app.h"
@@ -36,7 +23,6 @@
 
 ke_msg_id_t timer_used                           __SECTION_ZERO("retention_mem_area0"); //@RETENTION MEMORY
 uint16_t indication_counter                      __SECTION_ZERO("retention_mem_area0"); //@RETENTION MEMORY
-
 uint16_t non_db_val_read[CFG_MAX_CONNECTIONS]    __SECTION_ZERO("retention_mem_area0"); //@RETENTION MEMORY
 uint16_t non_db_val_write[CFG_MAX_CONNECTIONS]   __SECTION_ZERO("retention_mem_area0"); //@RETENTION MEMORY
 

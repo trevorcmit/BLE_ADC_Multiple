@@ -1,17 +1,9 @@
 /**
- ****************************************************************************************
- *
- * @file da1458x_config_basic.h
- *
- * @brief Basic compile configuration file.
- *
- * Copyright (C) 2014-2019 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information
- * of Dialog Semiconductor. All Rights Reserved.
- *
- ****************************************************************************************
- */
-
+****************************************************************************************
+* @file da1458x_config_basic.h
+* @brief Basic compile configuration file.
+****************************************************************************************
+*/
 #ifndef _DA1458X_CONFIG_BASIC_H_
 #define _DA1458X_CONFIG_BASIC_H_
 
@@ -175,7 +167,6 @@
 /****************************************************************************************************************/
 #undef CFG_UART1_SDK
 
-
 /****************************************************************************************************************/
 /* Select external memory device for data storage                                                               */
 /* SPI FLASH  (#define CFG_SPI_FLASH_ENABLE)                                                                    */
@@ -184,13 +175,7 @@
 #undef CFG_SPI_FLASH_ENABLE
 #undef CFG_I2C_EEPROM_ENABLE
 
-/****************************************************************************************************************/
-/* Enables/Disables the DMA Support for the following interfaces:                                               */
-/*     - UART                                                                                                   */
-/*     - SPI                                                                                                    */
-/*     - I2C                                                                                                    */
-/*     - ADC                                                                                                    */
-/****************************************************************************************************************/
+// Enables/Disables the DMA Support for the following interfaces: UART, SPI, I2C, ADC                                                                                    */
 #undef CFG_UART_DMA_SUPPORT
 #undef CFG_SPI_DMA_SUPPORT
 #undef CFG_I2C_DMA_SUPPORT
@@ -205,9 +190,9 @@
 /****************************************************************************************************************/
 /* Enable multiple connections configuration                                                                    */
 /****************************************************************************************************************/
-#if CFG_MAX_CONNECTIONS > (1)
-    #define CFG_ENABLE_MULTIPLE_CONN
-#endif
+// #if CFG_MAX_CONNECTIONS > (1)
+#define CFG_ENABLE_MULTIPLE_CONN
+// #endif
 
 #endif
 

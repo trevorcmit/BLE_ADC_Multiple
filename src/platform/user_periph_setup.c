@@ -1,22 +1,9 @@
 /**
- ****************************************************************************************
- *
- * @file user_periph_setup.c
- *
- * @brief Peripherals setup and initialization.
- *
- * Copyright (C) 2015-2019 Dialog Semiconductor.
- * This computer program includes Confidential, Proprietary Information
- * of Dialog Semiconductor. All Rights Reserved.
- *
- ****************************************************************************************
- */
-
-/*
- * INCLUDE FILES
- ****************************************************************************************
- */
-
+****************************************************************************************
+* @file user_periph_setup.c
+* @brief Peripherals setup and initialization.
+****************************************************************************************
+*/
 #include "user_periph_setup.h"
 #include "datasheet.h"
 #include "system_library.h"

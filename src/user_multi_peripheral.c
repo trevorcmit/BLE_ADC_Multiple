@@ -209,23 +209,23 @@ void user_app_adv_start(void) {
  ****************************************************************************************
  */
 
-#ifdef CFG_ENABLE_MULTIPLE_CONN
-__WEAK int gapc_connection_req_ind_handler(ke_msg_id_t const msgid,
-                      struct gapc_connection_req_ind const *param,
-                      ke_task_id_t const dest_id,
-                      ke_task_id_t const src_id)
+// #ifdef CFG_ENABLE_MULTIPLE_CONN
+// __WEAK int gapc_connection_req_ind_handler(ke_msg_id_t const msgid,
+//                       struct gapc_connection_req_ind const *param,
+//                       ke_task_id_t const dest_id,
+//                       ke_task_id_t const src_id)
 
-#else
-static int gapc_connection_req_ind_handler(ke_msg_id_t const msgid,
-                      struct gapc_connection_req_ind const *param,
-                      ke_task_id_t const dest_id,
-                      ke_task_id_t const src_id)
-#endif
+// #else
+// static int gapc_connection_req_ind_handler(ke_msg_id_t const msgid,
+//                       struct gapc_connection_req_ind const *param,
+//                       ke_task_id_t const dest_id,
+//                       ke_task_id_t const src_id)
+// #endif
 
-// int gapc_connection_req_ind_handler(ke_msg_id_t const msgid,
-//                                            struct gapc_connection_req_ind const *param,
-//                                            ke_task_id_t const dest_id,  // dest_id -> TASK_APP
-//                                            ke_task_id_t const src_id)   // src_id -> TASK_GAPC
+int gapc_connection_req_ind_handler(ke_msg_id_t const msgid,
+                                           struct gapc_connection_req_ind const *param,
+                                           ke_task_id_t const dest_id,  // dest_id -> TASK_APP
+                                           ke_task_id_t const src_id)   // src_id -> TASK_GAPC
 
 {
     uint8_t conidx = KE_IDX_GET(src_id);
@@ -268,24 +268,23 @@ static int gapc_connection_req_ind_handler(ke_msg_id_t const msgid,
  * @return If the message was consumed or not.
  ****************************************************************************************
  */
-// int gapc_disconnect_ind_handler(ke_msg_id_t const msgid,
-//                                        struct gapc_disconnect_ind const *param,
-//                                        ke_task_id_t const dest_id,
-//                                        ke_task_id_t const src_id)
+int gapc_disconnect_ind_handler(ke_msg_id_t const msgid,
+                                       struct gapc_disconnect_ind const *param,
+                                       ke_task_id_t const dest_id,
+                                       ke_task_id_t const src_id)
 
-#ifdef CFG_ENABLE_MULTIPLE_CONN
-__WEAK int gapc_disconnect_ind_handler(ke_msg_id_t const msgid,
-                      struct gapc_disconnect_ind const *param,
-                      ke_task_id_t const dest_id,
-                      ke_task_id_t const src_id)
+// #ifdef CFG_ENABLE_MULTIPLE_CONN
+// __WEAK int gapc_disconnect_ind_handler(ke_msg_id_t const msgid,
+//                       struct gapc_disconnect_ind const *param,
+//                       ke_task_id_t const dest_id,
+//                       ke_task_id_t const src_id)
 
-#else
-static int gapc_disconnect_ind_handler(ke_msg_id_t const msgid,
-                    struct gapc_disconnect_ind const *param,
-                    ke_task_id_t const dest_id,
-                    ke_task_id_t const src_id)
-#endif
-
+// #else
+// static int gapc_disconnect_ind_handler(ke_msg_id_t const msgid,
+//                     struct gapc_disconnect_ind const *param,
+//                     ke_task_id_t const dest_id,
+//                     ke_task_id_t const src_id)
+// #endif
 {
     uint8_t conidx = KE_IDX_GET(src_id);
     uint8_t state = ke_state_get(KE_BUILD_ID(KE_TYPE_GET(dest_id), conidx));
@@ -297,10 +296,8 @@ static int gapc_disconnect_ind_handler(ke_msg_id_t const msgid,
         CALLBACK_ARGS_1(user_app_callbacks.app_on_disconnect, param);
     }
     else {
-        // We are not in Connected State
-        ASSERT_ERROR(0);
+        ASSERT_ERROR(0);   // We are not in Connected State
     }
-
     return (KE_MSG_CONSUMED);
 }
 
@@ -314,7 +311,6 @@ bool app_db_init_start(void) {
         ke_state_set(KE_BUILD_ID(TASK_APP, idx), APP_DB_INIT);
 
     end_db_create = app_db_init_next();
-
     return end_db_create;
 }
 
