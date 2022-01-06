@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\out_DA14531\Objects\multi_con_periph_531.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\out_DA14531\Objects\multi_con_periph_531.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060960: Last Updated: Mon Dec 27 21:44:22 2021
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060960: Last Updated: Thu Jan 06 15:01:14 2022
 <BR><P>
 <H3>Maximum Stack Usage =        120 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -875,7 +875,7 @@ Global Symbols
 <P><STRONG><a name="[1a]"></a>XTAL32M_RDY_Handler</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, startup_da14531.o(.text))
 <BR>[Address Reference Count : 1]<UL><LI> startup_da14531.o(RESET)
 </UL>
-<P><STRONG><a name="[22]"></a>HardFault_HandlerC</STRONG> (Thumb, 134 bytes, Stack size 8 bytes, hardfault_handler.o(.text))
+<P><STRONG><a name="[22]"></a>HardFault_HandlerC</STRONG> (Thumb, 128 bytes, Stack size 8 bytes, hardfault_handler.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = HardFault_HandlerC
 </UL>
 <BR>[Calls]<UL><LI><a href="#[af]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;syscntl_dcdc_set_level
@@ -889,7 +889,7 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_da14531.o(.text)
 </UL>
-<P><STRONG><a name="[1e]"></a>main</STRONG> (Thumb, 176 bytes, Stack size 8 bytes, arch_main.o(.text))
+<P><STRONG><a name="[1e]"></a>main</STRONG> (Thumb, 164 bytes, Stack size 8 bytes, arch_main.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 120<LI>Call Chain = main &rArr; system_init &rArr; periph_init &rArr; set_pad_functions &rArr; GPIO_ConfigurePin &rArr; GPIO_SetPinFunction
 </UL>
 <BR>[Calls]<UL><LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;system_init
@@ -1081,7 +1081,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;system_init
 </UL>
 
-<P><STRONG><a name="[b4]"></a>system_init</STRONG> (Thumb, 594 bytes, Stack size 24 bytes, arch_system.o(.text))
+<P><STRONG><a name="[b4]"></a>system_init</STRONG> (Thumb, 566 bytes, Stack size 24 bytes, arch_system.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 112<LI>Call Chain = system_init &rArr; periph_init &rArr; set_pad_functions &rArr; GPIO_ConfigurePin &rArr; GPIO_SetPinFunction
 </UL>
 <BR>[Calls]<UL><LI><a href="#[54]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lld_sleep_init_func
@@ -1510,7 +1510,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BLE_WAKEUP_LP_Handler
 </UL>
 
-<P><STRONG><a name="[6]"></a>BLE_WAKEUP_LP_Handler</STRONG> (Thumb, 58 bytes, Stack size 8 bytes, rwble.o(.text))
+<P><STRONG><a name="[6]"></a>BLE_WAKEUP_LP_Handler</STRONG> (Thumb, 62 bytes, Stack size 8 bytes, rwble.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = BLE_WAKEUP_LP_Handler &rArr; power_up &rArr; patched_ble_regs_pop
 </UL>
 <BR>[Calls]<UL><LI><a href="#[fc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;syscntl_use_highest_amba_clocks

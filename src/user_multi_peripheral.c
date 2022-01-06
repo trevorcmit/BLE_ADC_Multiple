@@ -295,9 +295,7 @@ int gapc_disconnect_ind_handler(ke_msg_id_t const msgid,
         ke_state_set(KE_BUILD_ID(KE_TYPE_GET(dest_id), conidx), APP_CONNECTABLE);
         CALLBACK_ARGS_1(user_app_callbacks.app_on_disconnect, param);
     }
-    else {
-        ASSERT_ERROR(0);   // We are not in Connected State
-    }
+    else {ASSERT_ERROR(0);} // We are not in Connected State
     return (KE_MSG_CONSUMED);
 }
 
@@ -307,7 +305,7 @@ bool app_db_init_start(void) {
     bool end_db_create;
 
     // We are now in Initialization State
-    for(uint8_t idx = 0; idx < APP_IDX_MAX; idx++)
+    for (uint8_t idx = 0; idx < APP_IDX_MAX; idx++)
         ke_state_set(KE_BUILD_ID(TASK_APP, idx), APP_DB_INIT);
 
     end_db_create = app_db_init_next();
@@ -318,8 +316,7 @@ bool app_db_init_start(void) {
 void user_app_on_set_dev_config_complete(void) {
     // Add the first required service in the database
     if (app_db_init_start()) {
-        // No more service to add, start advertising
-        CALLBACK_ARGS_0(user_default_app_operations.default_operation_adv)
+        CALLBACK_ARGS_0(user_default_app_operations.default_operation_adv) // No more service to add, start advertising
     }
 }
 
