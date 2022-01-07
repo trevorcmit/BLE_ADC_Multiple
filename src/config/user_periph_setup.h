@@ -15,13 +15,32 @@
 #include "gpio.h"
 #include "uart.h"
 
+
+/****************************************************************************************/
+/* SPI configuration                                                                    */
+/****************************************************************************************/
+#define SPI_EN_PORT                     GPIO_PORT_0
+#define SPI_EN_PIN                      GPIO_PIN_1
+#define SPI_CLK_PORT                    GPIO_PORT_0
+#define SPI_CLK_PIN                     GPIO_PIN_4
+#define SPI_DO_PORT                     GPIO_PORT_0
+#define SPI_DO_PIN                      GPIO_PIN_0
+#define SPI_DI_PORT                     GPIO_PORT_0
+#define SPI_DI_PIN                      GPIO_PIN_3
+
+#define ADC_INPUT_PORT                  GPIO_PORT_0
+#define ADC_INPUT_PIN                   GPIO_PIN_6
+
+
 /****************************************************************************************/
 /* UART2 configuration to use with arch_console print messages                          */
 /****************************************************************************************/
 // Define UART2 Tx Pad
 #if defined (__DA14531__)
     #define UART2_TX_PORT           GPIO_PORT_0
-    #define UART2_TX_PIN            GPIO_PIN_6
+    // #define UART2_TX_PIN            GPIO_PIN_6
+
+    #define UART2_TX_PIN            GPIO_PIN_5
 #else
     #define UART2_TX_PORT           GPIO_PORT_0
     #define UART2_TX_PIN            GPIO_PIN_4

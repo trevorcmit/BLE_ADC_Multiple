@@ -29,7 +29,6 @@
  * - APP_CFG_HOST_PRIV_NRPA         Host Privacy, NRPA (non-connectable ONLY)
  * - APP_CFG_CNTL_PRIV_RPA_PUB      Controller Privacy, RPA or PUB, Public Identity
  * - APP_CFG_CNTL_PRIV_RPA_RAND     Controller Privacy, RPA, Public Identity
- *
  * Select only one option for privacy / addressing configuration.
  **************************************************************************
  */
@@ -47,23 +46,19 @@
 
 
 /******************************************
- * Default sleep mode. Possible values are:
- *
- * - ARCH_SLEEP_OFF
- * - ARCH_EXT_SLEEP_ON
- * - ARCH_EXT_SLEEP_OTP_COPY_ON
- *
- ******************************************
- */
+* Default sleep mode. Possible values are:
+* - ARCH_SLEEP_OFF
+* - ARCH_EXT_SLEEP_ON
+* - ARCH_EXT_SLEEP_OTP_COPY_ON
+******************************************
+*/
 static const sleep_state_t app_default_sleep_mode = ARCH_EXT_SLEEP_ON;
 
 /*
- ****************************************************************************************
- *
- * Advertising configuration
- *
- ****************************************************************************************
- */
+****************************************************************************************
+* Advertising configuration
+****************************************************************************************
+*/
 static const struct advertise_configuration user_adv_conf = {
 
     .addr_src = APP_CFG_ADDR_SRC(USER_CFG_ADDRESS_MODE),
@@ -110,22 +105,18 @@ static const struct advertise_configuration user_adv_conf = {
 
 /*
  ****************************************************************************************
- *
  * Advertising or scan response data for the following cases:
- *
  * - ADV_IND: Connectable undirected advertising event.
  *    - The maximum length of the user defined advertising data shall be 28 bytes.
  *    - The Flags data type are written by the related ROM function, hence the user shall
  *      not include them in the advertising data. The related ROM function adds 3 bytes in 
  *      the start of the advertising data that are to be transmitted over the air.
  *    - The maximum length of the user defined response data shall be 31 bytes.
- *
  * - ADV_NONCONN_IND: Non-connectable undirected advertising event.
  *    - The maximum length of the user defined advertising data shall be 31 bytes.
  *    - The Flags data type may be omitted, hence the user can use all the 31 bytes for 
  *      data.
  *    - The scan response data shall be empty.
- *
  * - ADV_SCAN_IND: Scannable undirected advertising event.
  *    - The maximum length of the user defined advertising data shall be 31 bytes.
  *    - The Flags data type may be omitted, hence the user can use all the 31 bytes for 
@@ -147,14 +138,11 @@ static const struct advertise_configuration user_adv_conf = {
 
 /*
  ****************************************************************************************
- *
  * Device name.
- *
  * - If there is space left in the advertising or scan response data the device name is
  *   copied there. The device name can be anytime read by a connected peer, if the
  *   application supports it.
  * - The Bluetooth device name can be up to 248 bytes.
- *
  ****************************************************************************************
  */
 /// Device name

@@ -20,6 +20,9 @@
 #include "user_custs1_impl.h"
 #include "arch_console.h"
 
+#include "adc.h"        // Includes for ADC reading capability
+#include "adc_531.h"
+
 /*
 * GLOBAL VARIABLE DEFINITIONS
 ****************************************************************************************
@@ -27,6 +30,71 @@
 struct app_env_tag user_app_env[APP_EASY_MAX_ACTIVE_CONNECTION]     __SECTION_ZERO("retention_mem_area0"); //@RETENTION MEMORY
 extern uint16_t non_db_val_read[CFG_MAX_CONNECTIONS];
 extern uint16_t non_db_val_write[CFG_MAX_CONNECTIONS];
+
+static void timer_cb(void);
+static uint16_t gpadc_read(void);
+static uint16_t gpadc_sample_to_mv(uint16_t sample);
+static timer_hnd timer_id __attribute__((section("retention_mem_area0"),zero_init));
+
+
+void user_on_init(void) {
+   arch_printf("\n\r%s", __FUNCTION__);
+   default_app_on_init();
+}
+
+
+void user_on_set_dev_config_complete(void) {
+    arch_printf("\n\r%s", __FUNCTION__);
+    default_app_on_set_dev_config_complete();
+}
+
+
+static uint16_t gpadc_read(void)
+{
+    /* Initialize the ADC */
+    adc_config_t adc_cfg =
+    {
+        .input_mode = ADC_INPUT_MODE_SINGLE_ENDED,
+        .input = ADC_INPUT_SE_P0_6,
+        .smpl_time_mult = 2,
+        .continuous = false,
+        .interval_mult = 0,
+        .input_attenuator = ADC_INPUT_ATTN_4X,
+        .chopping = false,
+        .oversampling = 0,
+    };
+    adc_init(&adc_cfg);
+
+    /* Perform offset calibration of the ADC */
+    adc_offset_calibrate(ADC_INPUT_MODE_SINGLE_ENDED);
+
+    adc_start();
+    uint16_t result = adc_correct_sample(adc_get_sample());
+    adc_disable();
+    return (result);
+}
+
+
+static uint16_t gpadc_sample_to_mv(uint16_t sample) {
+    /* Resolution of ADC sample depends on oversampling rate */
+    uint32_t adc_res = 10 + ((6 < adc_get_oversampling()) ? 6 : adc_get_oversampling());
+
+    /* Reference voltage is 900mv but scale based in input attenation */
+    uint32_t ref_mv = 900 * (GetBits16(GP_ADC_CTRL2_REG, GP_ADC_ATTN) + 1);
+
+    return (uint16_t)((((uint32_t)sample) * ref_mv) >> adc_res);
+}
+
+
+static void timer_cb(void) {
+    /* Perform single ADC conversion */
+    uint16_t result = gpadc_read();
+
+    arch_printf("\n\radc result: %dmv", gpadc_sample_to_mv(result));
+
+    /* Restart the timer */
+    timer_id = app_easy_timer(200, timer_cb);
+}
 
 
 static uint8_t print_out_connected_dev(void) {
@@ -77,7 +145,7 @@ void printout_db_status(void) {
 
 
 uint8_t sdkconidx_to_appconidx(uint8_t sdk_conidx) {
-    for(uint8_t app_conidx = 0; app_conidx < APP_IDX_MAX; app_conidx++) {
+    for (uint8_t app_conidx = 0; app_conidx < APP_IDX_MAX; app_conidx++) {
         if (!memcmp(app_env[sdk_conidx].peer_addr.addr, user_app_env[app_conidx].peer_addr.addr, sizeof(struct bd_addr)))
             return user_app_env[app_conidx].conidx;
     }
@@ -86,7 +154,7 @@ uint8_t sdkconidx_to_appconidx(uint8_t sdk_conidx) {
 
 
 uint8_t appconidx_to_sdkconidx(uint8_t app_conidx) {
-    for(uint8_t sdk_conidx = 0; sdk_conidx < APP_IDX_MAX; sdk_conidx++) {
+    for (uint8_t sdk_conidx = 0; sdk_conidx < APP_IDX_MAX; sdk_conidx++) {
         if (!memcmp(user_app_env[sdk_conidx].peer_addr.addr, app_env[app_conidx].peer_addr.addr, sizeof(struct bd_addr)))
             return app_env[sdk_conidx].conidx;
     }
@@ -96,7 +164,7 @@ uint8_t appconidx_to_sdkconidx(uint8_t app_conidx) {
 
 uint8_t add_to_user_peer_log(uint8_t connection_idx) {
     /* Check if the connected device exists in the application registered devices if yes return app_conidx  */
-    for(uint8_t idx = 0; idx < APP_IDX_MAX; idx++)
+    for (uint8_t idx = 0; idx < APP_IDX_MAX; idx++)
         if (!memcmp(app_env[connection_idx].peer_addr.addr, user_app_env[idx].peer_addr.addr, sizeof(struct bd_addr))) {
             //memcpy(&user_app_env[idx], &app_env[connection_idx], sizeof(struct app_env_tag) );
             user_app_env[idx].connection_active = true;
@@ -111,6 +179,28 @@ uint8_t add_to_user_peer_log(uint8_t connection_idx) {
         }
     }
     return 0xFF; // No room for an extra connection
+}
+
+
+void app_adcval1_timer_cb_handler() {
+    struct custs1_val_ntf_ind_req *req = KE_MSG_ALLOC_DYN(CUSTS1_VAL_NTF_REQ,
+                                                          prf_get_task_from_id(TASK_ID_CUSTS1),
+                                                          TASK_APP,
+                                                          custs1_val_ntf_ind_req,
+                                                          DEF_SVC1_ADC_VAL_1_CHAR_LEN);
+    uint16_t out[100];
+    for (int i = 0; i < 100; i++) {
+        uint16_t output = gpadc_sample_to_mv(gpadc_read()); // Get uint16_t ADC reading
+        out[i] = output;
+    }
+
+    req->handle = SVC1_IDX_ADC_VAL_1_VAL;      // Location to send it to
+    req->length = DEF_SVC1_ADC_VAL_1_CHAR_LEN;
+    req->notification = true;
+    memcpy(req->value, &out, DEF_SVC1_ADC_VAL_1_CHAR_LEN);
+    ke_msg_send(req);
+
+    if (ke_state_get(TASK_APP) == APP_CONNECTED) {timer_used = app_easy_timer(10, app_adcval1_timer_cb_handler);};
 }
 
 
@@ -187,7 +277,7 @@ void user_app_adv_start(void) {
     app_advertise_start_msg_send(cmd); // Send the message
     
     // Set proper states only to those tasks which are currently disconnected
-    for(uint8_t idx = 0; idx < APP_IDX_MAX; idx++) {
+    for (uint8_t idx = 0; idx < APP_IDX_MAX; idx++) {
         task_id = KE_BUILD_ID(TASK_APP, idx); 	
 		// Check if we are not already in a connected state	
 		if (ke_state_get(task_id) != APP_CONNECTED) {ke_state_set(task_id, APP_CONNECTABLE);}
@@ -199,8 +289,7 @@ void user_app_adv_start(void) {
 
 /**
  ****************************************************************************************
- * @brief Handles connection complete event from the GAP. Will enable profile.
- *          Custom function for multi-connection peripheral
+ * @brief Handles connection complete event from the GAP. Will enable profile. Custom function for multi-connection peripheral
  * @param[in] msgid     Id of the message received.
  * @param[in] param     Pointer to the parameters of the message.
  * @param[in] dest_id   ID of the receiving task instance (TASK_GAP).
@@ -208,26 +297,10 @@ void user_app_adv_start(void) {
  * @return If the message was consumed or not.
  ****************************************************************************************
  */
-
-// #ifdef CFG_ENABLE_MULTIPLE_CONN
-// __WEAK int gapc_connection_req_ind_handler(ke_msg_id_t const msgid,
-//                       struct gapc_connection_req_ind const *param,
-//                       ke_task_id_t const dest_id,
-//                       ke_task_id_t const src_id)
-
-// #else
-// static int gapc_connection_req_ind_handler(ke_msg_id_t const msgid,
-//                       struct gapc_connection_req_ind const *param,
-//                       ke_task_id_t const dest_id,
-//                       ke_task_id_t const src_id)
-// #endif
-
 int gapc_connection_req_ind_handler(ke_msg_id_t const msgid,
                                            struct gapc_connection_req_ind const *param,
                                            ke_task_id_t const dest_id,  // dest_id -> TASK_APP
-                                           ke_task_id_t const src_id)   // src_id -> TASK_GAPC
-
-{
+                                           ke_task_id_t const src_id) {  // src_id -> TASK_GAPC 
     uint8_t conidx = KE_IDX_GET(src_id);
     uint8_t current_state = ke_state_get(KE_BUILD_ID(KE_TYPE_GET(dest_id), conidx));
     
@@ -271,21 +344,7 @@ int gapc_connection_req_ind_handler(ke_msg_id_t const msgid,
 int gapc_disconnect_ind_handler(ke_msg_id_t const msgid,
                                        struct gapc_disconnect_ind const *param,
                                        ke_task_id_t const dest_id,
-                                       ke_task_id_t const src_id)
-
-// #ifdef CFG_ENABLE_MULTIPLE_CONN
-// __WEAK int gapc_disconnect_ind_handler(ke_msg_id_t const msgid,
-//                       struct gapc_disconnect_ind const *param,
-//                       ke_task_id_t const dest_id,
-//                       ke_task_id_t const src_id)
-
-// #else
-// static int gapc_disconnect_ind_handler(ke_msg_id_t const msgid,
-//                     struct gapc_disconnect_ind const *param,
-//                     ke_task_id_t const dest_id,
-//                     ke_task_id_t const src_id)
-// #endif
-{
+                                       ke_task_id_t const src_id) {
     uint8_t conidx = KE_IDX_GET(src_id);
     uint8_t state = ke_state_get(KE_BUILD_ID(KE_TYPE_GET(dest_id), conidx));
     
@@ -322,7 +381,7 @@ void user_app_on_set_dev_config_complete(void) {
 
 
 void user_app_on_init(void) {
-    for(uint8_t idx = 0; idx < APP_IDX_MAX; idx++) {
+    for (uint8_t idx = 0; idx < APP_IDX_MAX; idx++) {
         app_env[idx].conidx = GAP_INVALID_CONIDX;
 
         user_app_env[idx].conidx = GAP_INVALID_CONIDX;

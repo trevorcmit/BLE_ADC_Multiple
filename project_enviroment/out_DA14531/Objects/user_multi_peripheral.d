@@ -121,3 +121,6 @@
 .\out_da14531\objects\user_multi_peripheral.o: .\..\..\..\..\..\sdk\platform\arch\compiler\compiler.h
 .\out_da14531\objects\user_multi_peripheral.o: .\..\..\..\..\..\sdk\platform\core_modules\arch_console\arch_console.h
 .\out_da14531\objects\user_multi_peripheral.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h
+.\out_da14531\objects\user_multi_peripheral.o: .\..\..\..\..\..\sdk\platform\driver\adc\adc.h
+.\out_da14531\objects\user_multi_peripheral.o: .\..\..\..\..\..\sdk\platform\driver\adc\adc_531.h
+.\out_da14531\objects\user_multi_peripheral.o: .\..\..\..\..\..\sdk\platform\driver\adc\adc_531.h

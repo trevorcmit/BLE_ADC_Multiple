@@ -1,4 +1,4 @@
-;#<FEEDBACK># ARM Linker, 5060960: Last Updated: Thu Jan 06 15:01:14 2022
+;#<FEEDBACK># ARM Linker, 5060960: Last Updated: Fri Jan 07 15:24:44 2022
 ;VERSION 0.2
 ;FILE adc_531.o
 adc_correct_sample <= USED 0
@@ -59,10 +59,8 @@ default_app_on_addr_solved_ind <= USED 0
 default_app_on_csrk_exch <= USED 0
 default_app_on_disconnect <= USED 0
 default_app_on_encrypt_req_ind <= USED 0
-default_app_on_init <= USED 0
 default_app_on_pairing_succeeded <= USED 0
 default_app_on_ral_cmp_evt <= USED 0
-default_app_on_set_dev_config_complete <= USED 0
 ;FILE app_diss.o
 ;FILE app_diss_task.o
 ;FILE app_easy_msg_utils.o
@@ -303,6 +301,8 @@ user_svc1_indicateable_ind_cfm_handler <= USED 0
 user_svc1_long_val_ntf_cfm_handler <= USED 0
 ;FILE user_multi_peripheral.o
 appconidx_to_sdkconidx <= USED 0
+user_app_on_init <= USED 0
+user_app_on_set_dev_config_complete <= USED 0
 ;FILE user_periph_setup.o
 ;FILE wkupct_quadec.o
 quad_decoder_clear_irq <= USED 0
