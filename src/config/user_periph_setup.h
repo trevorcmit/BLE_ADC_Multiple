@@ -7,14 +7,9 @@
 #ifndef _USER_PERIPH_SETUP_H_
 #define _USER_PERIPH_SETUP_H_
 
-/*
-* INCLUDE FILES
-****************************************************************************************
-*/
 #include "arch.h"
 #include "gpio.h"
 #include "uart.h"
-
 
 /****************************************************************************************/
 /* SPI configuration                                                                    */

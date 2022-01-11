@@ -117,3 +117,6 @@
 .\out_da14531\objects\user_custs1_impl.o: .\..\..\..\..\..\sdk\platform\driver\dma\dma.h
 .\out_da14531\objects\user_custs1_impl.o: .\..\..\..\..\..\sdk\platform\core_modules\arch_console\arch_console.h
 .\out_da14531\objects\user_custs1_impl.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h
+.\out_da14531\objects\user_custs1_impl.o: .\..\..\..\..\..\sdk\platform\driver\adc\adc.h
+.\out_da14531\objects\user_custs1_impl.o: .\..\..\..\..\..\sdk\platform\driver\adc\adc_531.h
+.\out_da14531\objects\user_custs1_impl.o: .\..\..\..\..\..\sdk\platform\driver\adc\adc_531.h

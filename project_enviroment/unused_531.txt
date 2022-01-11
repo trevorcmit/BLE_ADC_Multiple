@@ -1,14 +1,10 @@
-;#<FEEDBACK># ARM Linker, 5060960: Last Updated: Fri Jan 07 15:24:44 2022
+;#<FEEDBACK># ARM Linker, 5060960: Last Updated: Tue Jan 11 13:37:53 2022
 ;VERSION 0.2
 ;FILE adc_531.o
-adc_correct_sample <= USED 0
-adc_disable <= USED 0
-adc_get_sample <= USED 0
 adc_get_temp_async <= USED 0
 adc_input_shift_config <= USED 0
 adc_input_shift_disable <= USED 0
 adc_input_shift_enable <= USED 0
-adc_offset_calibrate <= USED 0
 adc_register_interrupt <= USED 0
 adc_reset <= USED 0
 adc_unregister_interrupt <= USED 0
@@ -183,12 +179,6 @@ i2c_wait_until_eeprom_ready <= USED 0
 dummyf <= USED 0
 ;FILE nmi_handler.o
 ;FILE otp_cs.o
-otp_cs_get_adc_diff_ge <= USED 0
-otp_cs_get_adc_diff_offset <= USED 0
-otp_cs_get_adc_offsh_ge <= USED 0
-otp_cs_get_adc_offsh_offset <= USED 0
-otp_cs_get_adc_single_ge <= USED 0
-otp_cs_get_adc_single_offset <= USED 0
 otp_cs_get_low_power_clock <= USED 0
 ;FILE otp_hdr.o
 ;FILE patch.o

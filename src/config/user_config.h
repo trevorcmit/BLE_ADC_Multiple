@@ -15,33 +15,29 @@
 
 /*
 ****************************************************************************************
-*
 * Privacy / Addressing configuration
-*
 ****************************************************************************************
 */
-
 /*************************************************************************
- * Privacy Capabilities and address configuration of local device:
- * - APP_CFG_ADDR_PUB               No Privacy, Public BDA
- * - APP_CFG_ADDR_STATIC            No Privacy, Random Static BDA
- * - APP_CFG_HOST_PRIV_RPA          Host Privacy, RPA, Public Identity
- * - APP_CFG_HOST_PRIV_NRPA         Host Privacy, NRPA (non-connectable ONLY)
- * - APP_CFG_CNTL_PRIV_RPA_PUB      Controller Privacy, RPA or PUB, Public Identity
- * - APP_CFG_CNTL_PRIV_RPA_RAND     Controller Privacy, RPA, Public Identity
- * Select only one option for privacy / addressing configuration.
- **************************************************************************
- */
+* Privacy Capabilities and address configuration of local device:
+* - APP_CFG_ADDR_PUB               No Privacy, Public BDA
+* - APP_CFG_ADDR_STATIC            No Privacy, Random Static BDA
+* - APP_CFG_HOST_PRIV_RPA          Host Privacy, RPA, Public Identity
+* - APP_CFG_HOST_PRIV_NRPA         Host Privacy, NRPA (non-connectable ONLY)
+* - APP_CFG_CNTL_PRIV_RPA_PUB      Controller Privacy, RPA or PUB, Public Identity
+* - APP_CFG_CNTL_PRIV_RPA_RAND     Controller Privacy, RPA, Public Identity
+* Select only one option for privacy / addressing configuration.
+**************************************************************************
+*/
 #define USER_CFG_ADDRESS_MODE       APP_CFG_ADDR_PUB
 
 /*************************************************************************
- * Controller Privacy Mode:
- * - APP_CFG_CNTL_PRIV_MODE_NETWORK Controller Privacy Network mode (default)
- * - APP_CFG_CNTL_PRIV_MODE_DEVICE  Controller Privacy Device mode
- *
- * Select only one option for controller privacy mode configuration.
- **************************************************************************
- */
+* Controller Privacy Mode:
+* - APP_CFG_CNTL_PRIV_MODE_NETWORK Controller Privacy Network mode (default)
+* - APP_CFG_CNTL_PRIV_MODE_DEVICE  Controller Privacy Device mode
+* Select only one option for controller privacy mode configuration.
+**************************************************************************
+*/
 #define USER_CFG_CNTL_PRIV_MODE     APP_CFG_CNTL_PRIV_MODE_NETWORK
 
 
@@ -60,14 +56,9 @@ static const sleep_state_t app_default_sleep_mode = ARCH_EXT_SLEEP_ON;
 ****************************************************************************************
 */
 static const struct advertise_configuration user_adv_conf = {
-
     .addr_src = APP_CFG_ADDR_SRC(USER_CFG_ADDRESS_MODE),
-
-    /// Minimum interval for advertising
-    .intv_min = MS_TO_BLESLOTS(687.5),                    // 687.5ms
-
-    /// Maximum interval for advertising
-    .intv_max = MS_TO_BLESLOTS(687.5),                    // 687.5ms
+    .intv_min = MS_TO_BLESLOTS(687.5),                    // 687.5ms, Minimum interval for advertising
+    .intv_max = MS_TO_BLESLOTS(687.5),                    // 687.5ms, Maximum interval for advertising
 
     /**
      *  Advertising channels map:
@@ -146,7 +137,7 @@ static const struct advertise_configuration user_adv_conf = {
  ****************************************************************************************
  */
 /// Device name
-#define USER_DEVICE_NAME        "MULTI_CON"
+#define USER_DEVICE_NAME        "MULTI_CON_ADC"
 
 /// Device name length
 #define USER_DEVICE_NAME_LEN    (sizeof(USER_DEVICE_NAME)-1)
@@ -161,22 +152,12 @@ static const struct advertise_configuration user_adv_conf = {
 static const struct gapm_configuration user_gapm_conf = {
     /// Device Role: Central, Peripheral, Observer, Broadcaster or All roles. (@see enum gap_role)
     .role = GAP_ROLE_PERIPHERAL,
+    .max_mtu = 220, // Max MTU. Set to 23 if Legacy Pairing, 65 if Secure COnnection, more if required.
+    .addr_type = APP_CFG_ADDR_TYPE(USER_CFG_ADDRESS_MODE), /// Device Address Type
+    .renew_dur = 15000,    // 15000 * 10ms = 150s is the minimum value, during before regenerate random private address
 
-    /// Maximal MTU. Shall be set to 23 if Legacy Pairing is used, 65 if Secure Connection is used,
-    /// more if required by the application
-    .max_mtu = 23,
-
-    /// Device Address Type
-    .addr_type = APP_CFG_ADDR_TYPE(USER_CFG_ADDRESS_MODE),
-    /// Duration before regenerate the random private address when privacy is enabled
-    .renew_dur = 15000,    // 15000 * 10ms = 150s is the minimum value
-
-    /***********************
-     * Privacy configuration
-     ***********************
-     */
-
-    /// Private static address
+    // PRIVACY CONFIGURATION
+    // Private static address
     // NOTE: The address shall comply with the following requirements:
     // - the two most significant bits of the address shall be equal to 1,
     // - all the remaining bits of the address shall NOT be equal to 1,

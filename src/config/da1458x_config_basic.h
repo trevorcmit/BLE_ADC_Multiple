@@ -122,7 +122,7 @@
 /* Enables WatchDog timer.                                                                                      */
 /****************************************************************************************************************/
 // #define CFG_WDOG
-#undef CFG_WDOG
+#undef CFG_WDOG        // Turn off watchdog so ADC can run
 
 /****************************************************************************************************************/
 /* Watchdog timer behavior in production mode:                                                                  */

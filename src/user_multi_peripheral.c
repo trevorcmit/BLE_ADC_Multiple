@@ -31,10 +31,10 @@ struct app_env_tag user_app_env[APP_EASY_MAX_ACTIVE_CONNECTION]     __SECTION_ZE
 extern uint16_t non_db_val_read[CFG_MAX_CONNECTIONS];
 extern uint16_t non_db_val_write[CFG_MAX_CONNECTIONS];
 
-static void timer_cb(void);
-static uint16_t gpadc_read(void);
-static uint16_t gpadc_sample_to_mv(uint16_t sample);
-static timer_hnd timer_id __attribute__((section("retention_mem_area0"),zero_init));
+// static void timer_cb(void);
+// static uint16_t gpadc_read(void);
+// static uint16_t gpadc_sample_to_mv(uint16_t sample);
+// static timer_hnd timer_id __attribute__((section("retention_mem_area0"),zero_init));
 
 
 void user_on_init(void) {
@@ -49,52 +49,52 @@ void user_on_set_dev_config_complete(void) {
 }
 
 
-static uint16_t gpadc_read(void)
-{
-    /* Initialize the ADC */
-    adc_config_t adc_cfg =
-    {
-        .input_mode = ADC_INPUT_MODE_SINGLE_ENDED,
-        .input = ADC_INPUT_SE_P0_6,
-        .smpl_time_mult = 2,
-        .continuous = false,
-        .interval_mult = 0,
-        .input_attenuator = ADC_INPUT_ATTN_4X,
-        .chopping = false,
-        .oversampling = 0,
-    };
-    adc_init(&adc_cfg);
+// static uint16_t gpadc_read(void)
+// {
+//     /* Initialize the ADC */
+//     adc_config_t adc_cfg =
+//     {
+//         .input_mode = ADC_INPUT_MODE_SINGLE_ENDED,
+//         .input = ADC_INPUT_SE_P0_6,
+//         .smpl_time_mult = 2,
+//         .continuous = false,
+//         .interval_mult = 0,
+//         .input_attenuator = ADC_INPUT_ATTN_4X,
+//         .chopping = false,
+//         .oversampling = 0,
+//     };
+//     adc_init(&adc_cfg);
 
-    /* Perform offset calibration of the ADC */
-    adc_offset_calibrate(ADC_INPUT_MODE_SINGLE_ENDED);
+//     /* Perform offset calibration of the ADC */
+//     adc_offset_calibrate(ADC_INPUT_MODE_SINGLE_ENDED);
 
-    adc_start();
-    uint16_t result = adc_correct_sample(adc_get_sample());
-    adc_disable();
-    return (result);
-}
-
-
-static uint16_t gpadc_sample_to_mv(uint16_t sample) {
-    /* Resolution of ADC sample depends on oversampling rate */
-    uint32_t adc_res = 10 + ((6 < adc_get_oversampling()) ? 6 : adc_get_oversampling());
-
-    /* Reference voltage is 900mv but scale based in input attenation */
-    uint32_t ref_mv = 900 * (GetBits16(GP_ADC_CTRL2_REG, GP_ADC_ATTN) + 1);
-
-    return (uint16_t)((((uint32_t)sample) * ref_mv) >> adc_res);
-}
+//     adc_start();
+//     uint16_t result = adc_correct_sample(adc_get_sample());
+//     adc_disable();
+//     return (result);
+// }
 
 
-static void timer_cb(void) {
-    /* Perform single ADC conversion */
-    uint16_t result = gpadc_read();
+// static uint16_t gpadc_sample_to_mv(uint16_t sample) {
+//     /* Resolution of ADC sample depends on oversampling rate */
+//     uint32_t adc_res = 10 + ((6 < adc_get_oversampling()) ? 6 : adc_get_oversampling());
 
-    arch_printf("\n\radc result: %dmv", gpadc_sample_to_mv(result));
+//     /* Reference voltage is 900mv but scale based in input attenation */
+//     uint32_t ref_mv = 900 * (GetBits16(GP_ADC_CTRL2_REG, GP_ADC_ATTN) + 1);
 
-    /* Restart the timer */
-    timer_id = app_easy_timer(200, timer_cb);
-}
+//     return (uint16_t)((((uint32_t)sample) * ref_mv) >> adc_res);
+// }
+
+
+// static void timer_cb(void) {
+//     /* Perform single ADC conversion */
+//     uint16_t result = gpadc_read();
+
+//     arch_printf("\n\radc result: %dmv", gpadc_sample_to_mv(result));
+
+//     /* Restart the timer */
+//     timer_id = app_easy_timer(200, timer_cb);
+// }
 
 
 static uint8_t print_out_connected_dev(void) {
@@ -182,26 +182,26 @@ uint8_t add_to_user_peer_log(uint8_t connection_idx) {
 }
 
 
-void app_adcval1_timer_cb_handler() {
-    struct custs1_val_ntf_ind_req *req = KE_MSG_ALLOC_DYN(CUSTS1_VAL_NTF_REQ,
-                                                          prf_get_task_from_id(TASK_ID_CUSTS1),
-                                                          TASK_APP,
-                                                          custs1_val_ntf_ind_req,
-                                                          DEF_SVC1_ADC_VAL_1_CHAR_LEN);
-    uint16_t out[100];
-    for (int i = 0; i < 100; i++) {
-        uint16_t output = gpadc_sample_to_mv(gpadc_read()); // Get uint16_t ADC reading
-        out[i] = output;
-    }
+// void app_adcval1_timer_cb_handler() {
+//     struct custs1_val_ntf_ind_req *req = KE_MSG_ALLOC_DYN(CUSTS1_VAL_NTF_REQ,
+//                                                           prf_get_task_from_id(TASK_ID_CUSTS1),
+//                                                           TASK_APP,
+//                                                           custs1_val_ntf_ind_req,
+//                                                           DEF_SVC1_ADC_VAL_1_CHAR_LEN);
+//     uint16_t out[100];
+//     for (int i = 0; i < 100; i++) {
+//         uint16_t output = gpadc_sample_to_mv(gpadc_read()); // Get uint16_t ADC reading
+//         out[i] = output;
+//     }
 
-    req->handle = SVC1_IDX_ADC_VAL_1_VAL;      // Location to send it to
-    req->length = DEF_SVC1_ADC_VAL_1_CHAR_LEN;
-    req->notification = true;
-    memcpy(req->value, &out, DEF_SVC1_ADC_VAL_1_CHAR_LEN);
-    ke_msg_send(req);
+//     req->handle = SVC1_IDX_ADC_VAL_1_VAL;      // Location to send it to
+//     req->length = DEF_SVC1_ADC_VAL_1_CHAR_LEN;
+//     req->notification = true;
+//     memcpy(req->value, &out, DEF_SVC1_ADC_VAL_1_CHAR_LEN);
+//     ke_msg_send(req);
 
-    if (ke_state_get(TASK_APP) == APP_CONNECTED) {timer_used = app_easy_timer(10, app_adcval1_timer_cb_handler);};
-}
+//     if (ke_state_get(TASK_APP) == APP_CONNECTED) {timer_used = app_easy_timer(10, app_adcval1_timer_cb_handler);};
+// }
 
 
 void user_on_connection(uint8_t connection_idx, struct gapc_connection_req_ind const *param) {

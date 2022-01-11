@@ -38,7 +38,6 @@ i.e.
  * FUNCTION DECLARATIONS
  ****************************************************************************************
  */
-
 void user_on_init(void);
 void user_on_set_dev_config_complete(void);
 void app_adcval1_timer_cb_handler(void);
